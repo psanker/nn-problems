@@ -63,7 +63,15 @@ let test_lists () =
   assert (p17_1 = ([ "a"; "b"; "c" ], [ "d"; "e"; "f"; "g"; "h"; "i"; "j" ]));
   let (p17_2a, p17_2b) = Lists.split [ "a"; "b"; "c"; "d" ] 5 in
   let p17_2 = (p17_2a, p17_2b) in
-  assert (p17_2 = ([ "a"; "b"; "c"; "d" ], []))
+  assert (p17_2 = ([ "a"; "b"; "c"; "d" ], []));
+  let p18_1 = Lists.slice ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 2 6 in
+  assert (p18_1 = ["c"; "d"; "e"; "f"; "g"]);
+  let p19_1 = Lists.rotate ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"] 3 in
+  assert (p19_1 = ["d"; "e"; "f"; "g"; "h"; "a"; "b"; "c"]);
+  let p19_2 = Lists.rotate ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"] (-2) in
+  assert (p19_2 = ["g"; "h"; "a"; "b"; "c"; "d"; "e"; "f"]);
+  let p20_1 = Lists.remove_at 1 ["a"; "b"; "c"; "d"] in
+  assert (p20_1 = ["a"; "c"; "d"])
 ;;
 
 let () = test_lists ()

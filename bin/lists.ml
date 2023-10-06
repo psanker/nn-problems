@@ -176,3 +176,37 @@ let split lst len =
   in
   split' lst len ([], [])
 ;;
+
+let slice lst i_start i_end =
+  let rec slice' lst start i rem acc =
+    match lst with
+    | [] -> rev acc
+    | _ :: xs when i < start -> slice' xs start (i + 1) rem acc
+    | _ when rem <= 0 -> rev acc
+    | x :: xs -> slice' xs start (i + 1) (rem - 1) (x :: acc)
+  in
+  let size = i_end - i_start + 1 in
+  slice' lst i_start 0 size []
+;;
+
+let rotate lst amt =
+  let rec rotate' lst acc rem =
+    match lst, acc with
+    | [], [] -> []
+    | [], acc -> if rem > 0 then rotate' (rev acc) [] (rem - 1) else rev acc
+    | xs, acc when rem <= 0 -> xs @ rev acc
+    | x :: xs, acc -> rotate' xs (x :: acc) (rem - 1)
+  in
+  let rem = if amt < 0 then length lst + amt else amt in
+  rotate' lst [] rem
+;;
+
+let remove_at i lst =
+  let rec remove_at' cnt lst acc =
+    match lst with
+    | [] -> []
+    | _ :: xs when cnt <= 0 -> rev acc @ xs
+    | x :: xs -> remove_at' (cnt - 1) xs (x :: acc)
+  in
+  remove_at' i lst []
+;;
